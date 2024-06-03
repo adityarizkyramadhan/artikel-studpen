@@ -44,37 +44,77 @@
       background-color: #0056b3;
     }
 
-    h2 {
-      font-size: 15px;
+    #search-container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    #search-input {
+      width: 50%;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #007BFF;
+      border-radius: 5px;
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Pemrograman Golang Lanjutan</h1>
-    <h2>Aditya Rizky Ramadhan</h2>
-    <p>Artikel ini membahas tentang bahasa pemrograman Golang. Artikel ini membahas
-      tentang cara membuat kode pemrograman Golang menggunakan unit testing dengan Ginkgo. Setelah itu juga membahas
-      concurrency pada golang.
-    </p>
-    <a href="./go-lanjutan/pemrograman_be_lanjutan.html">Baca Artikel</a>
+  <div id="search-container">
+    <input type="text" id="search-input" placeholder="Cari judul atau deskripsi..." oninput="searchArticles()">
   </div>
-  <div class="container">
-    <h1>Pemrograman API Golang</h1>
-    <h2>Aditya Rizky Ramadhan</h2>
-    <p>Artikel ini membahas tentang konsep clean architecture, konsep REST API, Pengenalan Framework Golang, dan
-      implementasi REST API menggunakan Golang, Middleware, dan Autentikasi dan Authorisasi.
-    </p>
-    <a href="./go-api/index.html">Baca Artikel</a>
-  </div>
-  <div class="container">
-    <h1>Deployment</h1>
-    <h2>Aditya Rizky Ramadhan</h2>
-    <p>Artikel ini membahas tentang cara melakukan deployment aplikasi golang ke server.
-    </p>
-    <a href="./deployment/deployment.html">Baca Artikel</a>
-  </div>
+  <div id="article-container"></div>
+
+  <script>
+    const articles = [
+      {
+        "title": "Pemrograman Golang Lanjutan",
+        "author": "Aditya Rizky Ramadhan",
+        "description": "Artikel ini membahas tentang bahasa pemrograman Golang. Artikel ini membahas tentang cara membuat kode pemrograman Golang menggunakan unit testing dengan Ginkgo. Setelah itu juga membahas concurrency pada golang.",
+        "link": "./go-lanjutan/pemrograman_be_lanjutan.html"
+      },
+      {
+        "title": "Pemrograman API Golang",
+        "author": "Aditya Rizky Ramadhan",
+        "description": "Artikel ini membahas tentang konsep clean architecture, konsep REST API, Pengenalan Framework Golang, dan implementasi REST API menggunakan Golang, Middleware, dan Autentikasi dan Authorisasi.",
+        "link": "./go-api/index.html"
+      },
+      {
+        "title": "Deployment",
+        "author": "Aditya Rizky Ramadhan",
+        "description": "Artikel ini membahas tentang cara melakukan deployment aplikasi golang ke server.",
+        "link": "./deployment/deployment.html"
+      }
+    ];
+
+    function renderArticles(articlesToRender = articles) {
+      const container = document.getElementById('article-container');
+      container.innerHTML = ''; // Clear previous content
+      articlesToRender.forEach(article => {
+        const div = document.createElement('div');
+        div.className = 'container';
+        div.innerHTML = `
+          <h1>${article.title}</h1>
+          <h2>${article.author}</h2>
+          <p>${article.description}</p>
+          <a href="${article.link}">Baca Artikel</a>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function searchArticles() {
+      const searchText = document.getElementById('search-input').value.toLowerCase();
+      const filteredArticles = articles.filter(article =>
+        article.title.toLowerCase().includes(searchText) ||
+        article.description.toLowerCase().includes(searchText)
+      );
+      renderArticles(filteredArticles);
+    }
+
+    // Initially render all articles
+    renderArticles();
+  </script>
 </body>
 
 </html>
