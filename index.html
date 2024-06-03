@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords"
+    content="Golang, Pemrograman, Unit Testing, Concurrency, API, Deployment, Database Management, Aditya Rizky Ramadhan, SQL">
   <title>Artikel Studi Independen</title>
   <style>
     body {
@@ -24,7 +26,7 @@
 
     h1,
     h2 {
-      color: #5a5a5a;
+      color: black;
     }
 
     p {
@@ -61,7 +63,8 @@
 
 <body>
   <div id="search-container">
-    <input type="text" id="search-input" placeholder="Cari judul atau deskripsi..." oninput="searchArticles()">
+    <input type="text" id="search-input" placeholder="Cari judul, deskripsi, atau tanggal..."
+      oninput="searchArticles()">
   </div>
   <div id="article-container"></div>
 
@@ -71,25 +74,29 @@
         "title": "Pemrograman Golang Lanjutan",
         "author": "Aditya Rizky Ramadhan",
         "description": "Artikel ini membahas tentang bahasa pemrograman Golang. Artikel ini membahas tentang cara membuat kode pemrograman Golang menggunakan unit testing dengan Ginkgo. Setelah itu juga membahas concurrency pada golang.",
-        "link": "./go-lanjutan/pemrograman_be_lanjutan.html"
+        "link": "./go-lanjutan/pemrograman_be_lanjutan.html",
+        "timestamp": "2024-06-03"
       },
       {
         "title": "Pemrograman API Golang",
         "author": "Aditya Rizky Ramadhan",
         "description": "Artikel ini membahas tentang konsep clean architecture, konsep REST API, Pengenalan Framework Golang, dan implementasi REST API menggunakan Golang, Middleware, dan Autentikasi dan Authorisasi.",
-        "link": "./go-api/index.html"
+        "link": "./go-api/index.html",
+        "timestamp": "2024-06-03"
       },
       {
         "title": "Deployment",
         "author": "Aditya Rizky Ramadhan",
         "description": "Artikel ini membahas tentang cara melakukan deployment aplikasi golang ke server.",
-        "link": "./deployment/deployment.html"
+        "link": "./deployment/deployment.html",
+        "timestamp": "2024-06-03"
       },
       {
         "title": "Manajemen Database",
         "author": "Aditya Rizky Ramadhan",
         "description": "Artikel ini membahas tentang teori dan praktek manajemen database menggunakan Golang.",
-        "link": "./database/index.html"
+        "link": "./database/index.html",
+        "timestamp": "2024-06-03"
       }
     ];
 
@@ -103,6 +110,7 @@
           <h1>${article.title}</h1>
           <h2>${article.author}</h2>
           <p>${article.description}</p>
+          <p><strong>Published on:</strong> ${article.timestamp}</p>
           <a href="${article.link}">Baca Artikel</a>
         `;
         container.appendChild(div);
@@ -113,7 +121,8 @@
       const searchText = document.getElementById('search-input').value.toLowerCase();
       const filteredArticles = articles.filter(article =>
         article.title.toLowerCase().includes(searchText) ||
-        article.description.toLowerCase().includes(searchText)
+        article.description.toLowerCase().includes(searchText) ||
+        article.timestamp.includes(searchText)
       );
       renderArticles(filteredArticles);
     }
