@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aditya Rizky Ramadhan">
+
+<title>Pemrograman Backend Lanjutan</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="pemrograman_be_lanjutan_files/libs/clipboard/clipboard.min.js"></script>
+<script src="pemrograman_be_lanjutan_files/libs/quarto-html/quarto.js"></script>
+<script src="pemrograman_be_lanjutan_files/libs/quarto-html/popper.min.js"></script>
+<script src="pemrograman_be_lanjutan_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="pemrograman_be_lanjutan_files/libs/quarto-html/anchor.min.js"></script>
+<link href="pemrograman_be_lanjutan_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="pemrograman_be_lanjutan_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="pemrograman_be_lanjutan_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="pemrograman_be_lanjutan_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="pemrograman_be_lanjutan_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#unit-testing-basic" id="toc-unit-testing-basic" class="nav-link active" data-scroll-target="#unit-testing-basic"><span class="header-section-number">1</span> Unit Testing Basic</a>
+  <ul class="collapse">
+  <li><a href="#testing-in-development" id="toc-testing-in-development" class="nav-link" data-scroll-target="#testing-in-development"><span class="header-section-number">1.1</span> Testing in development</a></li>
+  <li><a href="#type-of-testing" id="toc-type-of-testing" class="nav-link" data-scroll-target="#type-of-testing"><span class="header-section-number">1.2</span> Type of Testing</a>
+  <ul class="collapse">
+  <li><a href="#manual-testing" id="toc-manual-testing" class="nav-link" data-scroll-target="#manual-testing"><span class="header-section-number">1.2.1</span> Manual Testing</a></li>
+  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link" data-scroll-target="#unit-testing"><span class="header-section-number">1.2.2</span> Unit Testing</a></li>
+  <li><a href="#integration-testing" id="toc-integration-testing" class="nav-link" data-scroll-target="#integration-testing"><span class="header-section-number">1.2.3</span> Integration Testing</a></li>
+  <li><a href="#end-to-end-testing" id="toc-end-to-end-testing" class="nav-link" data-scroll-target="#end-to-end-testing"><span class="header-section-number">1.2.4</span> End to end testing</a></li>
+  <li><a href="#acceptance-testing" id="toc-acceptance-testing" class="nav-link" data-scroll-target="#acceptance-testing"><span class="header-section-number">1.2.5</span> Acceptance Testing</a></li>
+  <li><a href="#software-testing-pyramid" id="toc-software-testing-pyramid" class="nav-link" data-scroll-target="#software-testing-pyramid"><span class="header-section-number">1.2.6</span> Software testing pyramid</a></li>
+  </ul></li>
+  <li><a href="#unit-testing-in-go" id="toc-unit-testing-in-go" class="nav-link" data-scroll-target="#unit-testing-in-go"><span class="header-section-number">1.3</span> Unit testing in Go</a></li>
+  <li><a href="#ginkgo" id="toc-ginkgo" class="nav-link" data-scroll-target="#ginkgo"><span class="header-section-number">1.4</span> Ginkgo</a>
+  <ul class="collapse">
+  <li><a href="#installation-and-bootstrapping" id="toc-installation-and-bootstrapping" class="nav-link" data-scroll-target="#installation-and-bootstrapping"><span class="header-section-number">1.4.1</span> Installation and Bootstrapping</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#concurrency" id="toc-concurrency" class="nav-link" data-scroll-target="#concurrency"><span class="header-section-number">2</span> Concurrency</a>
+  <ul class="collapse">
+  <li><a href="#pengenalan" id="toc-pengenalan" class="nav-link" data-scroll-target="#pengenalan"><span class="header-section-number">2.1</span> Pengenalan</a>
+  <ul class="collapse">
+  <li><a href="#apa-itu-concurrency" id="toc-apa-itu-concurrency" class="nav-link" data-scroll-target="#apa-itu-concurrency"><span class="header-section-number">2.1.1</span> Apa itu concurrency?</a></li>
+  <li><a href="#perbedaan-cocurrency-dan-parallelism" id="toc-perbedaan-cocurrency-dan-parallelism" class="nav-link" data-scroll-target="#perbedaan-cocurrency-dan-parallelism"><span class="header-section-number">2.1.2</span> Perbedaan cocurrency dan parallelism</a></li>
+  </ul></li>
+  <li><a href="#goroutine" id="toc-goroutine" class="nav-link" data-scroll-target="#goroutine"><span class="header-section-number">2.2</span> Goroutine</a></li>
+  <li><a href="#channel-dan-buffer-channel" id="toc-channel-dan-buffer-channel" class="nav-link" data-scroll-target="#channel-dan-buffer-channel"><span class="header-section-number">2.3</span> Channel dan Buffer Channel</a></li>
+  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><span class="header-section-number">2.4</span> Select</a></li>
+  <li><a href="#mutex" id="toc-mutex" class="nav-link" data-scroll-target="#mutex"><span class="header-section-number">2.5</span> Mutex</a></li>
+  <li><a href="#waitgroup" id="toc-waitgroup" class="nav-link" data-scroll-target="#waitgroup"><span class="header-section-number">2.6</span> WaitGroup</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="pemrograman_be_lanjutan.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="pemrograman_be_lanjutan.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pemrograman Backend Lanjutan</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Aditya Rizky Ramadhan </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="unit-testing-basic" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Unit Testing Basic</h1>
+<section id="testing-in-development" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="testing-in-development"><span class="header-section-number">1.1</span> Testing in development</h2>
+<p>Testing atau pengujian software adalah metode untuk memeriksa program yang dibuat sudah sesuai dengan persyaratan yang diharapkan dan memastikan agar program kita tidak cacat pada saat digunakan oleh user.</p>
+<p><strong>Tujuan :</strong></p>
+<ol type="1">
+<li><p><strong>Validasi keinginan pengguna</strong>: Testing membantu memvalidasi apakah program yang dikembangkan sudah memenuhi kebutuhan dan keinginan pengguna.</p></li>
+<li><p><strong>Meningkatkan kualitas program</strong>: Melalui testing, kita dapat memastikan bahwa program yang kita tulis mengikuti best practice dalam penulisan kode, sehingga meningkatkan kualitas secara keseluruhan.</p></li>
+<li><p><strong>Deteksi error dan edge cases</strong>: Testing membantu dalam mendeteksi adanya error berdasarkan berbagai kemungkinan input yang diberikan, termasuk kasus-kasus ekstrem (edge cases), sehingga meminimalkan kemungkinan terjadinya bug dan kecacatan dalam program.</p></li>
+<li><p><strong>Meningkatkan keamanan</strong>: Testing juga dapat membantu dalam meningkatkan keamanan program dengan mengidentifikasi potensi celah keamanan atau vulnerabilitas yang dapat dieksploitasi.</p></li>
+</ol>
+<p><strong>Untuk apa testing :</strong></p>
+<p>Testing juga merupakan tanggung jawab developer / software engineer sebagai seorang profesional, karena tidak ada developer / software engineer yang menulis kode langsung jalan sesuai kebutuhan tanpa di test sama sekali.</p>
+</section>
+<section id="type-of-testing" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="type-of-testing"><span class="header-section-number">1.2</span> Type of Testing</h2>
+<section id="manual-testing" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="manual-testing"><span class="header-section-number">1.2.1</span> Manual Testing</h3>
+<p>Proses pengujian ini dilakukan oleh manusia dengan cara memasukkan input dan memeriksa output secara manual. Proses ini dilakukan secara berulang-ulang sampai mendapatkan hasil yang diinginkan sesuai dengan kebutuhan dari prasyarat.</p>
+<p>Testing ini masih sering digunakan oleh developer dengan melakukan testing manual code program dalam skala kecil. testing ini memiliki kelemahan, yaitu tidak dapat dilakukan secara otomatis. Jika terdapat perubahan pada kode program, maka proses testing harus dilakukan ulang.</p>
+<p><strong>Kesimpulan: Manual testing cocok untuk testing dalam skala kecil, namun tidak cocok untuk skala besar.</strong></p>
+</section>
+<section id="unit-testing" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">1.2.2</span> Unit Testing</h3>
+<p>Unit testing adalah pengujian yang dilakukan secara otomatis dengan berfokus pada pengujian unit yang terkecil pada desain aplikasi. Karena dalam sebuah aplikasi banyak memiliki unit-unit kecil, maka untuk mengujinya biasanya dibuat program kecil atau main program untuk menguji unit-unit aplikasi.</p>
+<p>Unit-unit kecil ini dapat berupa fitur atau fungsi dan pengujian unit biasanya dilakukan saat kode program dibuat.</p>
+<p>Unit testing umumnya dilakukan oleh developer, dengan membuat code testing dalam bahasa pemrograman yang sama dengan bahasa pemrograman di aplikasi</p>
+<p><strong>Kesimpulan: Unit testing cocok untuk pengujian dalam skala kecil hingga menengah, namun tidak cocok untuk skala besar.</strong></p>
+</section>
+<section id="integration-testing" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="integration-testing"><span class="header-section-number">1.2.3</span> Integration Testing</h3>
+<p>Integration testing juga merupakan pengujian yang dilakukan secara otomatis dengan pengujian secara integrasi. Integrasi di sini adalah pengujian dari hasil penggabungan unit-unit sebagai suatu kombinasi, bukan lagi sebagai suatu unit yang individual.</p>
+<p>Integration testing sebaiknya dilakukan secara bertahap untuk menghindari kesulitan penelusuran jika terjadi kesalahan error / bug.</p>
+<p>Testing ini bisa dilakukan oleh developer atau tester dengan membuat code testing (pada tingkat modul / package) dari sekumpulan unit-unit yang saling terintegrasi (testing pada tingkat modul / package / library).</p>
+</section>
+<section id="end-to-end-testing" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="end-to-end-testing"><span class="header-section-number">1.2.4</span> End to end testing</h3>
+<p>End to end testing, sering disingkat E2E, adalah pengujian yang dilakukan untuk memvalidasi proses kerja aplikasi dari sudut pandang pengguna / user.</p>
+<p>Testing ini dibuat secara otomatis dengan membuat code testing yang dapat mensimulasikan tingkah laku atau tindakan-tindakan dari pengguna, hampir mirip seperti bot.</p>
+<p>E2E testing bisa dilakukan olah Developer atau tester, tapi lebih sering dilakukan oleh tim testing khusus yang disebut software engineer in test (SEIT).</p>
+</section>
+<section id="acceptance-testing" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="acceptance-testing"><span class="header-section-number">1.2.5</span> Acceptance Testing</h3>
+<p>Acceptance Testing adalah tahap final dari proses pengujian aplikasi / software sebelum akhirnya dirilis atau diperbarui secara komersil. Testing ini hampir sama dengan E2E testing, namun dilakukan oleh pengguna akhir.</p>
+<p>Proses ini dapat menentukan apakah suatu fitur dapat diterima atau harus diperbaiki oleh developer / software engineer sebelum dirilis.</p>
+<p>Jika terdapat fitur yang tidak lolos pada tahap acceptance testing, maka artinya aplikasi / software tersebut tidak memenuhi spesifikasi meskipun banyak beberapa fitur lain yang sudah memenuhi spesifikasi karena akan mengganggu proses aplikasi jika nanti dirilis.</p>
+</section>
+<section id="software-testing-pyramid" class="level3" data-number="1.2.6">
+<h3 data-number="1.2.6" class="anchored" data-anchor-id="software-testing-pyramid"><span class="header-section-number">1.2.6</span> Software testing pyramid</h3>
+<p>Testing pyramid adalah konsep untuk membangun aplikasi / software yang berkualitas dengan cara meminimalkan waktu yang dibutuhkan selama pengembangan dan meminimalkan kerusakan dengan membuat alur testing yang dibutuhkan.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image/hirarki%20testing.png" class="img-fluid figure-img"></p>
+<figcaption>Hirarki Testing</figcaption>
+</figure>
+</div>
+<p>Semakin ke bawah, maka semakin banyak jumlah test yang dibuat. Jumlah test yang dibuat pada tiap level testing harus seimbang, sehingga tidak terlalu banyak pada satu level dan tidak terlalu sedikit pada level lainnya.</p>
+</section>
+</section>
+<section id="unit-testing-in-go" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="unit-testing-in-go"><span class="header-section-number">1.3</span> Unit testing in Go</h2>
+<p>Contoh kode pada <code>main.go</code> sebagai berikut:</p>
+<p>Struktur file sebagai berikut:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">folder</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> main.go</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> main_test.go</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="st">"math"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Cube <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    Side <span class="dt">float64</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c Cube<span class="op">)</span> Area<span class="op">()</span> <span class="dt">float64</span> <span class="op">{</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">6</span> <span class="op">*</span> math<span class="op">.</span>Pow<span class="op">(</span>c<span class="op">.</span>Side<span class="op">,</span> <span class="dv">2</span><span class="op">)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c Cube<span class="op">)</span> Circumference<span class="op">()</span> <span class="dt">float64</span> <span class="op">{</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">12</span> <span class="op">*</span> c<span class="op">.</span>Side</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c Cube<span class="op">)</span> Volume<span class="op">()</span> <span class="dt">float64</span> <span class="op">{</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> math<span class="op">.</span>Pow<span class="op">(</span>c<span class="op">.</span>Side<span class="op">,</span> <span class="dv">3</span><span class="op">)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Maka dapat dibuat unit testing pada <code>main_test.go</code> sebagai berikut:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="st">"testing"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> TestArea<span class="op">(</span>t <span class="op">*</span>testing<span class="op">.</span>T<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> cube <span class="op">=</span> Cube<span class="op">{</span>Side<span class="op">:</span> <span class="dv">2</span><span class="op">}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> expected <span class="dt">float64</span> <span class="op">=</span> <span class="fl">24.0</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cube<span class="op">.</span>Area<span class="op">()</span> <span class="op">!=</span> expected <span class="op">{</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        t<span class="op">.</span>Errorf<span class="op">(</span><span class="st">"Expected %f, but got %f"</span><span class="op">,</span> expected<span class="op">,</span> cube<span class="op">.</span>Area<span class="op">())</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> TestCircumference<span class="op">(</span>t <span class="op">*</span>testing<span class="op">.</span>T<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> cube <span class="op">=</span> Cube<span class="op">{</span>Side<span class="op">:</span> <span class="dv">2</span><span class="op">}</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> expected <span class="dt">float64</span> <span class="op">=</span> <span class="fl">24.0</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cube<span class="op">.</span>Circumference<span class="op">()</span> <span class="op">!=</span> expected <span class="op">{</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        t<span class="op">.</span>Errorf<span class="op">(</span><span class="st">"Expected %f, but got %f"</span><span class="op">,</span> expected<span class="op">,</span> cube<span class="op">.</span>Circumference<span class="op">())</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> TestVolume<span class="op">(</span>t <span class="op">*</span>testing<span class="op">.</span>T<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> cube <span class="op">=</span> Cube<span class="op">{</span>Side<span class="op">:</span> <span class="dv">2</span><span class="op">}</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> expected <span class="dt">float64</span> <span class="op">=</span> <span class="fl">8.0</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cube<span class="op">.</span>Volume<span class="op">()</span> <span class="op">!=</span> expected <span class="op">{</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        t<span class="op">.</span>Errorf<span class="op">(</span><span class="st">"Expected %f, but got %f"</span><span class="op">,</span> expected<span class="op">,</span> cube<span class="op">.</span>Volume<span class="op">())</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Berikut merupakan contoh method yang disediakan oleh package <code>testing</code>:</p>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 93%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>METHOD</th>
+<th>DESKRIPSI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Log()</td>
+<td>Menampilkan log.</td>
+</tr>
+<tr class="even">
+<td>Logf()</td>
+<td>Menampilkan log dengan format.</td>
+</tr>
+<tr class="odd">
+<td>Fail()</td>
+<td>Digunakan untuk menandakan bahwa proses testing gagal, namun proses testing akan tetap berlanjut.</td>
+</tr>
+<tr class="even">
+<td>FailNow()</td>
+<td>Digunakan untuk menandakan bahwa proses testing gagal, dan proses testing langsung berhenti.</td>
+</tr>
+<tr class="odd">
+<td>Failed()</td>
+<td>Menampilkan laporan fail atau gagal.</td>
+</tr>
+<tr class="even">
+<td>SkipNow()</td>
+<td>Melewati proses testing fungsi tertentu dan melanjutkan ke testing fungsi setelahnya.</td>
+</tr>
+<tr class="odd">
+<td>Skipped()</td>
+<td>Menampilkan laporan skip.</td>
+</tr>
+<tr class="even">
+<td>Error()</td>
+<td>Memanggil Log() diikuti dengan Fail().</td>
+</tr>
+<tr class="odd">
+<td>Errorf()</td>
+<td>Memanggil Logf() diikuti dengan Fail().</td>
+</tr>
+<tr class="even">
+<td>Fatal()</td>
+<td>Memanggil Log() diikuti dengan FailNow().</td>
+</tr>
+<tr class="odd">
+<td>Fatalf()</td>
+<td>Memanggil Logf() diikuti dengan FailNow().</td>
+</tr>
+<tr class="even">
+<td>Skip()</td>
+<td>Memanggil Log() diikuti dengan SkipNow().</td>
+</tr>
+<tr class="odd">
+<td>Skipf()</td>
+<td>Memanggil Logf() diikuti dengan SkipNow().</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ginkgo" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="ginkgo"><span class="header-section-number">1.4</span> Ginkgo</h2>
+<p>Ginkgo adalah framework (kerangka kerja) yang dibuat untuk membuat testing yang mudah dibaca dan ditulis di bahasa pemrograman Golang. Ginkgo dibuat berdasarkan konsep “Behaviour Driven Development” (BDD) dan dapat digunakan untuk segala jenis testing, seperti unit testing, integration testing, system testing, acceptance testing, dll.</p>
+<section id="installation-and-bootstrapping" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="installation-and-bootstrapping"><span class="header-section-number">1.4.1</span> Installation and Bootstrapping</h3>
+<p>Untuk menginstall Ginkgo, jalankan perintah berikut:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> install <span class="at">-mod</span><span class="op">=</span>mod github.com/onsi/ginkgo/v2/ginkgo</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> get <span class="at">-u</span> github.com/onsi/ginkgo/v2</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> get <span class="at">-u</span> github.com/onsi/gomega/...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Setelah melakukan instalasi maka kita buat struktur project seperti dibawah ini</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">my-project/</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> calculator</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── calculator.go</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> go.mod</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> go.sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sekarang kita dapat mengisi file <code>calculator.go</code> dengan kode sebagai berikut:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> calculator</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Calculator <span class="kw">struct</span><span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    Base <span class="dt">float64</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> InitCalculator<span class="op">(</span>base <span class="dt">float64</span><span class="op">)</span> <span class="op">*</span>Calculator <span class="op">{</span> <span class="co">// inisiasi kalkulator</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">&amp;</span>Calculator<span class="op">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        Base<span class="op">:</span> base<span class="op">,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>Calculator<span class="op">)</span> Add<span class="op">(</span>number <span class="dt">float64</span><span class="op">)</span> <span class="op">{</span> <span class="co">// method untuk penjumlahan</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>Base <span class="op">+=</span> number</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>Calculator<span class="op">)</span> Subtract<span class="op">(</span>number <span class="dt">float64</span><span class="op">)</span> <span class="op">{</span> <span class="co">// method untuk pengurangan</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>Base <span class="op">-=</span> number</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>Calculator<span class="op">)</span> Multiply<span class="op">(</span>number <span class="dt">float64</span><span class="op">)</span> <span class="op">{</span> <span class="co">// method untuk perkalian</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>Base <span class="op">*=</span> number</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>Calculator<span class="op">)</span> Divide<span class="op">(</span>number <span class="dt">float64</span><span class="op">)</span> <span class="dt">error</span> <span class="op">{</span> <span class="co">// method untuk pembagian</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> number <span class="op">==</span> <span class="dv">0</span> <span class="op">{</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> errors<span class="op">.</span>New<span class="op">(</span><span class="st">"cannot divide by zero"</span><span class="op">)</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>Base <span class="op">/=</span> number</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ot">nil</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>Calculator<span class="op">)</span> Result<span class="op">()</span> <span class="dt">float64</span> <span class="op">{</span> <span class="co">// method untuk menampilkan hasil</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c<span class="op">.</span>Base</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>Calculator<span class="op">)</span> Reset<span class="op">()</span> <span class="op">{</span> <span class="co">// method untuk mereset hasil</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>Base <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Setelah itu, jalankan perintah berikut untuk membuat file testing:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> calculator</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ginkgo</span> bootstrap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>setalah proses diatas maka muncul file baru pada golang sebagai berikut:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">my-project/</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> calculator</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── calculator_suite_test.go</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── calculator.go</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> go.mod</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> go.sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Setelah itu dapat kita lanjutkan untuk melakukan generate unit test nya</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ginkgo</span> generate main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Maka susunan folder akan menjadi sebagai berikut</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">my-project</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> calculator</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── calculator_suite_test.go</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── calculator_test.go</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── calculator.go</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> go.mod</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> go.sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Setelah itu file <code>calculator_test.go</code> dapat diisi sebagai berikut</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> TestData <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    Spec <span class="dt">string</span> <span class="co">// deskripsi dari test case</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    Base <span class="dt">float64</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    Input <span class="dt">float64</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    Expect <span class="dt">float64</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> _ <span class="op">=</span> Describe<span class="op">(</span><span class="st">"Calculator"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    Describe<span class="op">(</span><span class="st">"Add"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">var</span> tests <span class="op">=</span> <span class="op">[]</span>TestData<span class="op">{</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span><span class="st">"Adding base positive number with positive number"</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">},</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span><span class="st">"Adding base negative number with positive number"</span><span class="op">,</span> <span class="op">-</span><span class="dv">5</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">5</span><span class="op">},</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span><span class="st">"Adding base positive number with negative number"</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="op">-</span><span class="dv">20</span><span class="op">,</span> <span class="op">-</span><span class="dv">10</span><span class="op">},</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span><span class="st">"Adding base negative number with negative number"</span><span class="op">,</span> <span class="op">-</span><span class="dv">10</span><span class="op">,</span> <span class="op">-</span><span class="dv">10</span><span class="op">,</span> <span class="op">-</span><span class="dv">20</span><span class="op">},</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _<span class="op">,</span> test <span class="op">:=</span> <span class="kw">range</span> tests <span class="op">{</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>            Context<span class="op">(</span>test<span class="op">.</span>Spec<span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                It<span class="op">(</span><span class="st">"Should return the correct result"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>                    calc <span class="op">:=</span> calculator<span class="op">.</span>InitCalculator<span class="op">(</span>test<span class="op">.</span>Base<span class="op">)</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                    calc<span class="op">.</span>Add<span class="op">(</span>test<span class="op">.</span>Input<span class="op">)</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                    Expect<span class="op">(</span>calc<span class="op">.</span>Result<span class="op">()).</span>To<span class="op">(</span>Equal<span class="op">(</span>test<span class="op">.</span>Expect<span class="op">))</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                <span class="op">})</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>            <span class="op">})</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="op">})</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Atau dapat diisi sebagai berikut:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> _ <span class="op">=</span> Describe<span class="op">(</span><span class="st">"Calculator"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// arrange</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> calc <span class="op">*</span>calculator<span class="op">.</span>Calculator</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    BeforeEach<span class="op">(</span><span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        calc <span class="op">=</span> calculator<span class="op">.</span>InitCalculator<span class="op">(</span><span class="dv">5</span><span class="op">)</span> <span class="co">// setiap kali pengujian, 'Base' di calculator akan diisi 5</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    Describe<span class="op">(</span><span class="st">"Add"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        It<span class="op">(</span><span class="st">"Should add the base number with adder number"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>            calc<span class="op">.</span>Add<span class="op">(</span><span class="dv">4</span><span class="op">)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>            Expect<span class="op">(</span>calc<span class="op">.</span>Result<span class="op">()).</span>To<span class="op">(</span>Equal<span class="op">(</span><span class="fl">9.0</span><span class="op">))</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">})</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    Describe<span class="op">(</span><span class="st">"Subtract"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        It<span class="op">(</span><span class="st">"Should subtract the base number with subtractor number"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>            calc<span class="op">.</span>Subtract<span class="op">(</span><span class="dv">2</span><span class="op">)</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>            Expect<span class="op">(</span>calc<span class="op">.</span>Result<span class="op">()).</span>To<span class="op">(</span>Equal<span class="op">(</span><span class="fl">3.0</span><span class="op">))</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">})</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    Describe<span class="op">(</span><span class="st">"Multiple"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        It<span class="op">(</span><span class="st">"Should multiply the base number with multiplier number"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>            calc<span class="op">.</span>Multiply<span class="op">(</span><span class="dv">10</span><span class="op">)</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>            Expect<span class="op">(</span>calc<span class="op">.</span>Result<span class="op">()).</span>To<span class="op">(</span>Equal<span class="op">(</span><span class="fl">50.0</span><span class="op">))</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>        <span class="op">})</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    Describe<span class="op">(</span><span class="st">"divide"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>        It<span class="op">(</span><span class="st">"Should divide the base number with divider number"</span><span class="op">,</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>            calc<span class="op">.</span>Divide<span class="op">(</span><span class="dv">5</span><span class="op">)</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>            Expect<span class="op">(</span>calc<span class="op">.</span>Result<span class="op">()).</span>To<span class="op">(</span>Equal<span class="op">(</span><span class="fl">1.0</span><span class="op">))</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>        <span class="op">})</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    AfterEach<span class="op">(</span><span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>        calc<span class="op">.</span>Reset<span class="op">()</span> <span class="co">// setiap kali selesai pengujian, 'Base' akan di reset dengan nilai 0</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="op">})</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="concurrency" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Concurrency</h1>
+<section id="pengenalan" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="pengenalan"><span class="header-section-number">2.1</span> Pengenalan</h2>
+<section id="apa-itu-concurrency" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="apa-itu-concurrency"><span class="header-section-number">2.1.1</span> Apa itu concurrency?</h3>
+<p>Concurrency adalah teknik pemrograman yang digunakan untuk menyelesaikan beberapa tasks yang diselesaikan dalam waktu yang sama. Task dikerjakan bergantian dengan task lainnya, namun karena berlangsung dengan cepat sehingga terlihat seperti dilakukan bersamaan.</p>
+</section>
+<section id="perbedaan-cocurrency-dan-parallelism" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="perbedaan-cocurrency-dan-parallelism"><span class="header-section-number">2.1.2</span> Perbedaan cocurrency dan parallelism</h3>
+<ul>
+<li><p><strong>Concurrency</strong>: Ini berkaitan dengan bagaimana cara dan struktur pengerjaan agar banyak tugas dapat dilakukan secara bersamaan, tetapi penting untuk dicatat bahwa “bersamaan” di sini tidak berarti dilakukan secara simultan. Dalam concurrency, tugas-tugas tersebut bisa dilakukan secara bergantian atau secara interleaved, yang mengarah pada kesan bahwa mereka berjalan bersamaan meskipun sebenarnya hanya satu tugas yang dieksekusi pada suatu waktu tertentu.</p></li>
+<li><p><strong>Parallelism</strong>: Ini mengacu pada bagaimana cara melakukan banyak tugas secara benar-benar bersamaan atau serentak, biasanya menggunakan sumber daya komputasi yang terpisah. Dalam parallelism, beberapa tugas dapat dieksekusi secara bersamaan pada unit pemrosesan yang terpisah, memungkinkan untuk pemrosesan yang lebih cepat atau efisien secara keseluruhan.</p></li>
+</ul>
+</section>
+</section>
+<section id="goroutine" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="goroutine"><span class="header-section-number">2.2</span> Goroutine</h2>
+<p>Goroutine adalah lightweight thread yang dikelola oleh Go runtime. Cara membuat goroutine cukup dengan menambahkan keyword go sebelum fungsi yang ingin kita jalankan.</p>
+<p>Berikut merupakan contoh kode yang menggunakan sequential dan concurrent:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"fmt"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"time"</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> start time<span class="op">.</span>Time</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> init<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> time<span class="op">.</span>Now<span class="op">()</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Sequential: Program akan menunggu tiap pemanggilan APICall sehingga banyak waktu yang diperlukan untuk menunggu</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    APICallA<span class="op">()</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    APICallB<span class="op">()</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Concurrent: Tambahkan go saat melakukan APICall:</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">// go APICallA()</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">// go APICallB()</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    time<span class="op">.</span>Sleep<span class="op">(</span><span class="dv">200</span> <span class="op">*</span> time<span class="op">.</span>Millisecond<span class="op">)</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">"from main function at time"</span><span class="op">,</span> time<span class="op">.</span>Since<span class="op">(</span>start<span class="op">))</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> APICallA<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    time<span class="op">.</span>Sleep<span class="op">(</span><span class="dv">100</span> <span class="op">*</span> time<span class="op">.</span>Millisecond<span class="op">)</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">"from APICallA at time"</span><span class="op">,</span> time<span class="op">.</span>Since<span class="op">(</span>start<span class="op">))</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> APICallB<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    time<span class="op">.</span>Sleep<span class="op">(</span><span class="dv">100</span> <span class="op">*</span> time<span class="op">.</span>Millisecond<span class="op">)</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">"from APICallB at time"</span><span class="op">,</span> time<span class="op">.</span>Since<span class="op">(</span>start<span class="op">))</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="channel-dan-buffer-channel" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="channel-dan-buffer-channel"><span class="header-section-number">2.3</span> Channel dan Buffer Channel</h2>
+<p>Golang menyediakan channel untuk melakukan komunikasi antar goroutine. Channel adalah sebuah type data yang dapat digunakan untuk mengirimkan dan menerima data. Channel dapat digunakan untuk mengirimkan data dari satu fungsi ke fungsi lainnya.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image/channel%20ilustrasi.png" class="img-fluid figure-img"></p>
+<figcaption>Ilustrasi channel</figcaption>
+</figure>
+</div>
+<p>Channel adalah sebuah type data atau variable di Golang. Kita dapat mendeklarasikan channel dengan menggunakan keyword make diikuti chan diikuti dengan tipe data yang akan di kirimkan melalui channel. Seperti yang dijelaskan sebelumnya, tujuan dari channel adalah untuk mengirimkan dan menerima data antar goroutine.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> printMessage<span class="op">(</span>msg <span class="kw">chan</span> <span class="dt">string</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(&lt;-</span>msg<span class="op">)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    runtime<span class="op">.</span>GOMAXPROCS<span class="op">(</span><span class="dv">2</span><span class="op">)</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> messages <span class="op">=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">string</span><span class="op">)</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> names <span class="op">=</span> <span class="op">[]</span><span class="dt">string</span><span class="op">{</span><span class="st">"Imam Permana"</span><span class="op">,</span> <span class="st">"Budi"</span><span class="op">,</span> <span class="st">"Anya Geraldine"</span><span class="op">}</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> sayHelloTo <span class="op">=</span> <span class="kw">func</span><span class="op">(</span>who <span class="dt">string</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">// send data ke channel 'message'</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">var</span> data <span class="op">=</span> fmt<span class="op">.</span>Sprintf<span class="op">(</span><span class="st">"hello %s"</span><span class="op">,</span> who<span class="op">)</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        messages <span class="op">&lt;-</span> data</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _<span class="op">,</span> each <span class="op">:=</span> <span class="kw">range</span> names <span class="op">{</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">go</span> sayHelloTo<span class="op">(</span>each<span class="op">)</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="op">:=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="bu">len</span><span class="op">(</span>names<span class="op">);</span> i<span class="op">++</span> <span class="op">{</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">// fungsi ini sebagai receive data dari channel 'messages'</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>        printMessage<span class="op">(</span>messages<span class="op">)</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Saat membuat channel, kita bisa menentukan sizenya dan itu berarti channel yang sizenya lebih dari 0 disebut dengan buffered channel.</p>
+<p>Contoh kode untuk buffered channel:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    runtime<span class="op">.</span>GOMAXPROCS<span class="op">(</span><span class="dv">2</span><span class="op">)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> messages <span class="op">=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">string</span><span class="op">,</span> <span class="dv">2</span><span class="op">)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> names <span class="op">=</span> <span class="op">[]</span><span class="dt">string</span><span class="op">{</span><span class="st">"Imam Permana"</span><span class="op">,</span> <span class="st">"Budi"</span><span class="op">,</span> <span class="st">"Anya Geraldine"</span><span class="op">}</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> sayHelloTo <span class="op">=</span> <span class="kw">func</span><span class="op">(</span>who <span class="dt">string</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// send data ke channel 'message'</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">var</span> data <span class="op">=</span> fmt<span class="op">.</span>Sprintf<span class="op">(</span><span class="st">"hello %s"</span><span class="op">,</span> who<span class="op">)</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        messages <span class="op">&lt;-</span> data</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _<span class="op">,</span> each <span class="op">:=</span> <span class="kw">range</span> names <span class="op">{</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">go</span> sayHelloTo<span class="op">(</span>each<span class="op">)</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="op">:=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="bu">len</span><span class="op">(</span>names<span class="op">);</span> i<span class="op">++</span> <span class="op">{</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        <span class="co">// fungsi ini sebagai receive data dari channel 'messages'</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        printMessage<span class="op">(</span>messages<span class="op">)</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="select" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="select"><span class="header-section-number">2.4</span> Select</h2>
+<p>Select adalah statement di Golang yang digunakan untuk memilih satu dari beberapa channel yang siap untuk digunakan. Select akan memilih channel yang siap untuk digunakan dan mengeksekusi blok kode yang sesuai.</p>
+<p>Contoh kode select:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    runtime<span class="op">.</span>GOMAXPROCS<span class="op">(</span><span class="dv">2</span><span class="op">)</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> messages <span class="op">=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">string</span><span class="op">)</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> quit <span class="op">=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">string</span><span class="op">)</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">go</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">{</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">select</span> <span class="op">{</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">case</span> message <span class="op">:=</span> <span class="op">&lt;-</span>messages<span class="op">:</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">"receive message"</span><span class="op">,</span> message<span class="op">)</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">case</span> <span class="op">&lt;-</span>quit<span class="op">:</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">"quit"</span><span class="op">)</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}()</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="op">:=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">5</span><span class="op">;</span> i<span class="op">++</span> <span class="op">{</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        messages <span class="op">&lt;-</span> fmt<span class="op">.</span>Sprintf<span class="op">(</span><span class="st">"message %d"</span><span class="op">,</span> i<span class="op">)</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        time<span class="op">.</span>Sleep<span class="op">(</span><span class="dv">1</span> <span class="op">*</span> time<span class="op">.</span>Second<span class="op">)</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    quit <span class="op">&lt;-</span> <span class="st">"bye"</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    time<span class="op">.</span>Sleep<span class="op">(</span><span class="dv">2</span> <span class="op">*</span> time<span class="op">.</span>Second<span class="op">)</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="mutex" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="mutex"><span class="header-section-number">2.5</span> Mutex</h2>
+<p>Mutex adalah singkatan dari Mutual Exclusion. Mutex digunakan untuk mengontrol akses ke suatu resource yang bersifat shared. Dengan menggunakan mutex, kita dapat memastikan bahwa hanya satu goroutine yang dapat mengakses resource tersebut pada satu waktu.</p>
+<p>Contoh kode mutex:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"fmt"</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sync"</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> x <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> wg sync<span class="op">.</span>WaitGroup</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> increment<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    wg<span class="op">.</span>Done<span class="op">()</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="op">:=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">1000</span><span class="op">;</span> i<span class="op">++</span> <span class="op">{</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        wg<span class="op">.</span>Add<span class="op">(</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">go</span> increment<span class="op">()</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    wg<span class="op">.</span>Wait<span class="op">()</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">"final value of x"</span><span class="op">,</span> x<span class="op">)</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="waitgroup" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="waitgroup"><span class="header-section-number">2.6</span> WaitGroup</h2>
+<p>WaitGroup adalah sebuah struct yang digunakan untuk menunggu sekelompok goroutine selesai. WaitGroup memiliki tiga method yaitu Add, Done, dan Wait.</p>
+<ul>
+<li>Add: digunakan untuk menambahkan jumlah goroutine yang akan dijalankan.</li>
+<li>Done: digunakan untuk mengurangi jumlah goroutine yang sedang berjalan.</li>
+<li>Wait: digunakan untuk menunggu semua goroutine selesai.</li>
+</ul>
+<p>Contoh kode WaitGroup:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode go code-with-copy"><code class="sourceCode go"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"fmt"</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sync"</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> x <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> wg sync<span class="op">.</span>WaitGroup</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> increment<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    wg<span class="op">.</span>Done<span class="op">()</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="op">:=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">1000</span><span class="op">;</span> i<span class="op">++</span> <span class="op">{</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        wg<span class="op">.</span>Add<span class="op">(</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">go</span> increment<span class="op">()</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    wg<span class="op">.</span>Wait<span class="op">()</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">"final value of x"</span><span class="op">,</span> x<span class="op">)</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
